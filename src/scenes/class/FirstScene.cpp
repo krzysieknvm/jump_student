@@ -7,3 +7,7 @@
 FirstScene::FirstScene(QObject *parent) : QGraphicsScene(parent) {
 
 }
+
+void FirstScene::setup() {
+
+}
