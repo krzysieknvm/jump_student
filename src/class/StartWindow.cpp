@@ -5,6 +5,8 @@
 #include "../module/StartWindow.h"
 #include "../scenes/module/FirstScene.h"
 
+//TODO: Dorobić przycisk startowy
+
 StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     //USTAWIENIA OKNA
     setWindowTitle("Jump Student");
