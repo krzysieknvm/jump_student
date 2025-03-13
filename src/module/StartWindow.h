@@ -7,6 +7,7 @@
 
 #include <QLayout>
 #include <QGraphicsView>
+#include <QGraphicsScene>
 #include <QPushButton>
 #include <QLabel>
 
@@ -21,6 +22,8 @@ private slots:
     void clearForGame();
 
 private:
+    QGraphicsScene *menuStart;
+
     QPushButton *startBtn;
     QLabel *testLabel;
     QBoxLayout *layout;

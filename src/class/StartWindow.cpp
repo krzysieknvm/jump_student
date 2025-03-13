@@ -17,13 +17,19 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     setWindowTitle("Jump Student");
     setFixedSize(1024,768);
 
+    //SCENA MENU
+    QGraphicsScene *menuStart = new QGraphicsScene(this);
+    setScene(menuStart);
+
     //PRZYCISK ROZPOCZNIJ
     QPushButton *startBtn = new QPushButton("Rozpocznij", this);
+    startBtn->setObjectName("startBtn");
     connect(startBtn, &QPushButton::clicked, this, &StartWindow::clearForGame);
     startBtn->setFixedSize(100,50);
 
     //NAPIS TESTOWY
     QLabel *testLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
+    testLabel->setObjectName("testLabel");
     testLabel->setAlignment(Qt::AlignCenter);
     testLabel->setGeometry(QRect(10, 10, 200, 50));
 
@@ -38,12 +44,11 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
 }
 
 void StartWindow::clearForGame() {
+    qDebug() << "StartWindow::clearForGame";
     //TODO: Nie działa i nie wiem czemu
     //CHOWANIE RZECZY POCZĄTKOWYCH
-    if (startBtn && testLabel) {
-        startBtn->hide();
-        testLabel->hide();
-    }
+    this->findChild<QPushButton*>("startBtn")->hide();
+    this->findChild<QLabel*>("testLabel")->hide();
 
     //USTAWIENIE PIERWSZEJ SCENY
     FirstScene *fScene = new FirstScene(this);
@@ -51,5 +56,6 @@ void StartWindow::clearForGame() {
 }
 
 StartWindow::~StartWindow() {
+    delete startBtn;
     delete testLabel;
 }
