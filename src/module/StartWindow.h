@@ -17,14 +17,15 @@ public:
     explicit StartWindow(QWidget *parent = nullptr);
     ~StartWindow();
 
+private slots:
+    void clearForGame();
+
 private:
     QPushButton *startBtn;
     QLabel *testLabel;
     QBoxLayout *layout;
 
-private slots:
-    void clearForGame();
-
+signals:
 };
 
 

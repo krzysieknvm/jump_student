@@ -10,17 +10,12 @@
 #include <QLabel>
 #include <QDebug>
 
-//TODO: Dorobić przycisk startowy
+//TODO: Zmienić bohatera na klase i dodać jakiś ruch
 
 StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
-    qDebug() << "StartWindow::StartWindow";
     //USTAWIENIA OKNA
     setWindowTitle("Jump Student");
     setFixedSize(1024,768);
-
-    //USTAWIENIE PIERWSZEJ SCENY
-    FirstScene *fScene = new FirstScene(this);
-    setScene(fScene);
 
     //PRZYCISK ROZPOCZNIJ
     QPushButton *startBtn = new QPushButton("Rozpocznij", this);
@@ -36,12 +31,23 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     layout->addWidget(startBtn);
+    layout->addWidget(testLabel);
+    layout->setContentsMargins(10,250,10,10);
     layout->setAlignment(startBtn,Qt::AlignCenter);
     setLayout(layout);
 }
 
 void StartWindow::clearForGame() {
-    // testLabel->hide();
+    //TODO: Nie działa i nie wiem czemu
+    //CHOWANIE RZECZY POCZĄTKOWYCH
+    if (startBtn && testLabel) {
+        startBtn->hide();
+        testLabel->hide();
+    }
+
+    //USTAWIENIE PIERWSZEJ SCENY
+    FirstScene *fScene = new FirstScene(this);
+    setScene(fScene);
 }
 
 StartWindow::~StartWindow() {

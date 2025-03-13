@@ -15,6 +15,8 @@ public:
     explicit FirstScene(QObject *parent = nullptr);
 
 private:
+    QGraphicsPixmapItem *player;
+
     void setup();
 };
 
