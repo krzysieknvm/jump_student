@@ -5,6 +5,7 @@
 #include "../module/FirstScene.h"
 
 #include <QGraphicsPixmapItem>
+#include <QString>
 #include <QGraphicsRectItem>
 #include <QPixmap>
 
@@ -23,6 +24,7 @@ void FirstScene::setup() {
     addItem(player);
 
     //GENEROWANIE PODŁOŻA
+    //TODO: PRZEROBIĆ TO W OBIEKT
     floor = new QGraphicsRectItem(0,728,1024,40);
     floor->setBrush(QBrush(Qt::darkGreen));
     addItem(floor);
@@ -31,7 +33,7 @@ void FirstScene::setup() {
 void FirstScene::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Space) {
         qDebug() << "Key_Press";
-        player->setPos(480,player->pos().y() + 6);
+        player->setPos(player->pos().x(),player->pos().y() + 6);
         player->inJump(true);
     }
     QGraphicsScene::keyPressEvent(event);
@@ -40,7 +42,7 @@ void FirstScene::keyPressEvent(QKeyEvent *event) {
 void FirstScene::keyReleaseEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Space) {
         qDebug() << "Key_Release";
-        player->setPos(480,player->pos().y() - 6);
+        player->setPos(player->pos().x(),player->pos().y() - 6);
         player->inJump(false);
     }
     QGraphicsScene::keyReleaseEvent(event);

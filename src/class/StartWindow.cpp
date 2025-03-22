@@ -41,11 +41,12 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     layout->setContentsMargins(10,250,10,10);
     layout->setAlignment(startBtn,Qt::AlignCenter);
     setLayout(layout);
+
+
 }
 
 void StartWindow::clearForGame() {
     qDebug() << "StartWindow::clearForGame";
-    //TODO: Nie działa i nie wiem czemu
     //CHOWANIE RZECZY POCZĄTKOWYCH
     this->findChild<QPushButton*>("startBtn")->hide();
     this->findChild<QLabel*>("testLabel")->hide();

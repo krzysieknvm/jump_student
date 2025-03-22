@@ -10,6 +10,7 @@
 #include <QGraphicsScene>
 #include <QPushButton>
 #include <QLabel>
+#include <QString>
 
 class StartWindow : public QGraphicsView {
     Q_OBJECT
@@ -27,8 +28,6 @@ private:
     QPushButton *startBtn;
     QLabel *testLabel;
     QBoxLayout *layout;
-
-signals:
 };
 
 

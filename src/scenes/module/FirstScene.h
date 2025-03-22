@@ -9,8 +9,8 @@
 
 #include <QGraphicsScene>
 #include <QPushButton>
-#include <QEvent>
 #include <QKeyEvent>
+#include <QString>
 
 
 class FirstScene : public QGraphicsScene {
@@ -19,6 +19,8 @@ class FirstScene : public QGraphicsScene {
 public:
     explicit FirstScene(QObject *parent = nullptr);
     ~FirstScene();
+
+public slots:
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
