@@ -5,21 +5,14 @@
 #include "../module/StartWindow.h"
 #include "../scenes/module/FirstScene.h"
 
-#include <QPushButton>
-#include <QLayout>
-#include <QLabel>
-#include <QDebug>
-
-//TODO: Zmienić bohatera na klase i dodać jakiś ruch
 
 StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     //USTAWIENIA OKNA
     setWindowTitle("Jump Student");
     setFixedSize(1024,768);
 
-    //SCENA MENU
-    menuStart = new QGraphicsScene(this);
-    setScene(menuStart);
+    //ŁADOWANIE SCEN
+    fScene = new FirstScene(this);
 
     //PRZYCISK ROZPOCZNIJ
     startBtn = new QPushButton("Rozpocznij", this);
@@ -28,30 +21,27 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     startBtn->setFixedSize(100,50);
 
     //NAPIS TESTOWY
-    testLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
-    testLabel->setObjectName("testLabel");
-    testLabel->setAlignment(Qt::AlignCenter);
-    testLabel->setGeometry(QRect(10, 10, 200, 50));
+    descLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
+    descLabel->setObjectName("testLabel");
+    descLabel->setAlignment(Qt::AlignCenter);
+    descLabel->setGeometry(QRect(10, 10, 200, 50));
 
     //LAYOUT
-    layout = new QVBoxLayout(this);
+    startingScreenLayout = new QVBoxLayout(this);
 
-    layout->addWidget(startBtn);
-    layout->addWidget(testLabel);
-    layout->setContentsMargins(10,250,10,10);
-    layout->setAlignment(startBtn,Qt::AlignCenter);
-    setLayout(layout);
-
-
+    startingScreenLayout->addWidget(startBtn);
+    startingScreenLayout->addWidget(descLabel);
+    startingScreenLayout->setContentsMargins(10,250,10,10);
+    startingScreenLayout->setAlignment(startBtn,Qt::AlignCenter);
+    setLayout(startingScreenLayout);
 }
 
 void StartWindow::clearForGame() {
-    qDebug() << "StartWindow::clearForGame";
+    qDebug() << "Game start...";
     //CHOWANIE RZECZY POCZĄTKOWYCH
     this->findChild<QPushButton*>("startBtn")->hide();
     this->findChild<QLabel*>("testLabel")->hide();
 
     //USTAWIENIE PIERWSZEJ SCENY
-    FirstScene *fScene = new FirstScene(this);
     setScene(fScene);
 }

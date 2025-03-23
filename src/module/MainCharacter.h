@@ -14,9 +14,10 @@ public:
     explicit MainCharacter(QGraphicsPixmapItem *parent = nullptr);
     // ~MainCharacter();
 
-    bool dir, in_jump, is_on_ground; //dir(direction) -> left = false, right = true
-    const double gravAcceleration = 0.098;
-    double velocity = 0.0, acceleration = 0.0;
+    bool dir, in_jump, is_on_ground, is_jumping; //dir(direction) -> left = false, right = true
+    const double gravAcceleration = 0.4;
+    double velocity = 0.0;
+    const int refresh_rate = 16;
 
     void inJump();
     void jump();
@@ -40,7 +41,6 @@ private:
     QPixmap characterInJumpPXRight;
 
     QTimer *gravTimer;
-    QTimer *jumpTimer;
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

@@ -4,19 +4,15 @@
 
 #include "../module/FirstScene.h"
 
-#include <QGraphicsPixmapItem>
-#include <QString>
+#include <QCoreApplication>
+#include <QPixmap>
 
 FirstScene::FirstScene(QObject *parent) : QGraphicsScene(parent) {
-    player = nullptr;
-    floor = nullptr;
+    dirPath = QCoreApplication::applicationDirPath();
     setSceneRect(0,0,1022,758);
-    setup();
-}
 
-void FirstScene::setup() {
     // USTAWIENIA SCENY
-    setBackgroundBrush(QBrush(Qt::blue));
+    setBackgroundBrush(QPixmap(dirPath.left(dirPath.lastIndexOf('/')) + "/src/resources/images/fscene_bg.png"));
 
     //GENEROWANIE BOHATERA
     player = new MainCharacter();

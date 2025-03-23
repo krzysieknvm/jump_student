@@ -5,6 +5,8 @@
 #ifndef STARTWINDOW_H
 #define STARTWINDOW_H
 
+#include "../scenes/module/FirstScene.h"
+
 #include <QLayout>
 #include <QGraphicsView>
 #include <QGraphicsScene>
@@ -22,11 +24,11 @@ private slots:
     void clearForGame();
 
 private:
-    QGraphicsScene *menuStart;
+    FirstScene *fScene;
 
     QPushButton *startBtn;
-    QLabel *testLabel;
-    QBoxLayout *layout;
+    QLabel *descLabel;
+    QBoxLayout *startingScreenLayout;
 };
 
 

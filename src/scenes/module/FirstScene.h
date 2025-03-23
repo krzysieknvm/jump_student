@@ -9,7 +9,6 @@
 
 #include <QGraphicsScene>
 #include <QPushButton>
-#include <QKeyEvent>
 #include <QString>
 
 class FirstScene : public QGraphicsScene {
@@ -18,16 +17,11 @@ class FirstScene : public QGraphicsScene {
 public:
     explicit FirstScene(QObject *parent = nullptr);
 
-public slots:
-
-protected:
-
 private:
     MainCharacter *player;
     QGraphicsRectItem *floor;
 
-    void setup();
+    QString dirPath;
 
-signals:
 };
 #endif //FIRSTSCENE_H

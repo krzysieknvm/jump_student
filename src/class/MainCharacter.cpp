@@ -4,12 +4,11 @@
 
 #include "../module/MainCharacter.h"
 
-#include <QGraphicsItem>
 #include <QKeyEvent>
-#include <QString>
+#include <QCoreApplication>
 #include <QTimer>
 
-MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(parent), dir(false), in_jump(false), is_on_ground(false) {
+MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(parent), dir(false), in_jump(false), is_on_ground(false), is_jumping(false) {
     //USTAWIENIE KLASY POD ODBIERANIE SYGNAŁÓW Z KLAWIATURY
     setFlag(QGraphicsItem::ItemIsFocusable);
     setFocus();
@@ -17,11 +16,7 @@ MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(
     //USTAWIENIE GRAWITACJI
     gravTimer = new QTimer(this);
     connect(gravTimer, &QTimer::timeout, this, &MainCharacter::gravity);
-    gravTimer->start(16);
-
-    //TIMER DLA SKOKU
-    jumpTimer = new QTimer(this);
-    connect(jumpTimer, &QTimer::timeout, this, &MainCharacter::jump);
+    gravTimer->start(refresh_rate);
 
     //TODO: Zrobić kolejne warianty postaci
     //MODELE POSTACI
@@ -43,10 +38,10 @@ MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(
 }
 
 void MainCharacter::keyPressEvent(QKeyEvent *event) {
+    //BLOKOWANIE AUTOPOWTARZANIA PRZYCISKÓW
     if (event->isAutoRepeat()) return;
 
     if (event->key() == Qt::Key_Space) {
-        qDebug() << "Key_Press";
         this->in_jump = true;
         this->inJump();
     }
@@ -65,12 +60,15 @@ void MainCharacter::keyPressEvent(QKeyEvent *event) {
 }
 
 void MainCharacter::keyReleaseEvent(QKeyEvent *event) {
+    //BLOKOWANIE AUTOPOWTARZANIA PRZYCISKÓW
     if (event->isAutoRepeat()) return;
 
     if (event->key() == Qt::Key_Space) {
-        qDebug() << "Key_Release";
         this->in_jump = false;
         this->inJump();
+
+        //SKOK
+        if (!this->is_jumping) jump();
     }
     QGraphicsPixmapItem::keyReleaseEvent(event);
 }
@@ -94,14 +92,17 @@ void MainCharacter::changeDir() {
 }
 
 void MainCharacter::jump() {
+    //ZMIENNE BLOKUJĄCE
+    this->is_on_ground = false;
+    this->is_jumping = true;
 
-    this->setY(this->pos().y() - 6);
+    //NADANIE PRĘDKOŚCI SKOKU
+    this->velocity = -12;
 }
 
 void MainCharacter::gravity() {
-    qDebug() << this->velocity;
     if (!is_on_ground) {
-        this->velocity += (1 * gravAcceleration) + (1 * acceleration);
+        this->velocity += (1 * this->gravAcceleration);
         this->setY(this->pos().y() + velocity);
     }
 
@@ -109,6 +110,7 @@ void MainCharacter::gravity() {
     for (QGraphicsItem *floor : floors) {
         if (floor->type() == QGraphicsRectItem::Type) {
             this->is_on_ground = true;
+            this->is_jumping = false;
             this->velocity = 0.0;
             break;
         }
