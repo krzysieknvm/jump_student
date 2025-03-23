@@ -18,23 +18,23 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     setFixedSize(1024,768);
 
     //SCENA MENU
-    QGraphicsScene *menuStart = new QGraphicsScene(this);
+    menuStart = new QGraphicsScene(this);
     setScene(menuStart);
 
     //PRZYCISK ROZPOCZNIJ
-    QPushButton *startBtn = new QPushButton("Rozpocznij", this);
+    startBtn = new QPushButton("Rozpocznij", this);
     startBtn->setObjectName("startBtn");
     connect(startBtn, &QPushButton::clicked, this, &StartWindow::clearForGame);
     startBtn->setFixedSize(100,50);
 
     //NAPIS TESTOWY
-    QLabel *testLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
+    testLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
     testLabel->setObjectName("testLabel");
     testLabel->setAlignment(Qt::AlignCenter);
     testLabel->setGeometry(QRect(10, 10, 200, 50));
 
     //LAYOUT
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    layout = new QVBoxLayout(this);
 
     layout->addWidget(startBtn);
     layout->addWidget(testLabel);
@@ -54,9 +54,4 @@ void StartWindow::clearForGame() {
     //USTAWIENIE PIERWSZEJ SCENY
     FirstScene *fScene = new FirstScene(this);
     setScene(fScene);
-}
-
-StartWindow::~StartWindow() {
-    delete startBtn;
-    delete testLabel;
 }

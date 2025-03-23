@@ -12,27 +12,22 @@
 #include <QKeyEvent>
 #include <QString>
 
-
 class FirstScene : public QGraphicsScene {
     Q_OBJECT
 
 public:
     explicit FirstScene(QObject *parent = nullptr);
-    ~FirstScene();
 
 public slots:
 
 protected:
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
 
 private:
     MainCharacter *player;
     QGraphicsRectItem *floor;
 
     void setup();
+
+signals:
 };
-
-
-
 #endif //FIRSTSCENE_H

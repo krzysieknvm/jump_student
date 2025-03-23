@@ -17,7 +17,6 @@ class StartWindow : public QGraphicsView {
 
 public:
     explicit StartWindow(QWidget *parent = nullptr);
-    ~StartWindow();
 
 private slots:
     void clearForGame();
