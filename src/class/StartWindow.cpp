@@ -11,9 +11,6 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     setWindowTitle("Jump Student");
     setFixedSize(1024,768);
 
-    //ŁADOWANIE SCEN
-    fScene = new FirstScene(this);
-
     //PRZYCISK ROZPOCZNIJ
     startBtn = new QPushButton("Rozpocznij", this);
     startBtn->setObjectName("startBtn");
@@ -43,5 +40,6 @@ void StartWindow::clearForGame() {
     this->findChild<QLabel*>("testLabel")->hide();
 
     //USTAWIENIE PIERWSZEJ SCENY
+    fScene = new FirstScene(this);
     setScene(fScene);
 }

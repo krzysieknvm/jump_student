@@ -12,9 +12,15 @@ class MainCharacter : public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 public:
     explicit MainCharacter(QGraphicsPixmapItem *parent = nullptr);
-    // ~MainCharacter();
 
-    bool dir, in_jump, is_on_ground, is_jumping; //dir(direction) -> left = false, right = true
+    // dir -> kierunek patrzenia postaci --> left = false, right = true
+    // in_jump -> czy postać jest w fazie "ładowania" koku (wygląd)
+    // in_on_ground -> czy postać znajduje się na podłożu
+    // is_jumping -> czy postać jest w fazie skoku (pozycja)
+    // is_jump_dir_set -> czy postać w danym skoku ma ustawiony kierunek
+
+    bool dir, in_jump, is_on_ground, is_jumping, is_jump_dir_set;
+    int jump_dir = 0; //jump dir -> 0 = none, -1 = left, 1 = right
     const double gravAcceleration = 0.4;
     double velocity = 0.0;
     const int refresh_rate = 16;
@@ -22,7 +28,7 @@ public:
     void inJump();
     void jump();
     void changeDir();
-    void gravity();
+    void physics();
 
 public slots:
 
@@ -40,7 +46,7 @@ private:
     QPixmap characterInJumpPXLeft;
     QPixmap characterInJumpPXRight;
 
-    QTimer *gravTimer;
+    QTimer *physicsTimer;
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

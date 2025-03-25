@@ -16,6 +16,7 @@ class FirstScene : public QGraphicsScene {
 
 public:
     explicit FirstScene(QObject *parent = nullptr);
+    void setup();
 
 private:
     MainCharacter *player;

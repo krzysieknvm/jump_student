@@ -16,12 +16,20 @@ FirstScene::FirstScene(QObject *parent) : QGraphicsScene(parent) {
 
     //GENEROWANIE BOHATERA
     player = new MainCharacter();
-    player->setPos(480,400);//x-480,y-660
-    addItem(player);
 
     //GENEROWANIE PODŁOŻA
     //TODO: PRZEROBIĆ TO W OBIEKT
     floor = new QGraphicsRectItem(0,728,1024,40);
+
+    setup();
+}
+
+void FirstScene::setup() {
+    //DODANIE BOHATERA DO SCENY
+    player->setPos(480,400);//x-480,y-660
+    addItem(player);
+
+    //DODANIE PODŁOŻA DO SCENY
     floor->setBrush(QBrush(Qt::darkGreen));
     addItem(floor);
 }
