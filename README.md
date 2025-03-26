@@ -43,7 +43,7 @@ qt_add_executable(jump_student
 )
 ```
 7. Przejść w cmd do katalogu `cmake-build-default-mingw` (cmake automatycznie tworzy ten folder po komendzie z punktu 5 (może się inaczej nazywać ale zawsze zaczyna się od `cmake-build`))
-8. Uruchomić komendę `C:\Qt\6.5.0\mingw_64\bin\windeployqt.exe jump_student.exe`
+8. Uruchomić komendę `C:\Qt\6.8.2\mingw_64\bin\windeployqt.exe jump_student.exe`
 9. Powtórzyć punkt 5
 
 Teraz można uruchomić grę poprzez środowisko i cieszyć się doświadczeniami.
