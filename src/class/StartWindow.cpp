@@ -11,6 +11,9 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     setWindowTitle("Jump Student");
     setFixedSize(1024,768);
 
+    //GENEROWANIE PIERWSZEJ SCENY
+    fScene = new FirstScene(this);
+
     //PRZYCISK ROZPOCZNIJ
     startBtn = new QPushButton("Rozpocznij", this);
     startBtn->setObjectName("startBtn");
@@ -19,9 +22,8 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
 
     //NAPIS TESTOWY
     descLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
-    descLabel->setObjectName("testLabel");
+    descLabel->setObjectName("descLabel");
     descLabel->setAlignment(Qt::AlignCenter);
-    descLabel->setGeometry(QRect(10, 10, 200, 50));
 
     //LAYOUT
     startingScreenLayout = new QVBoxLayout(this);
@@ -37,9 +39,8 @@ void StartWindow::clearForGame() {
     qDebug() << "Game start...";
     //CHOWANIE RZECZY POCZĄTKOWYCH
     this->findChild<QPushButton*>("startBtn")->hide();
-    this->findChild<QLabel*>("testLabel")->hide();
+    this->findChild<QLabel*>("descLabel")->hide();
 
     //USTAWIENIE PIERWSZEJ SCENY
-    fScene = new FirstScene(this);
     setScene(fScene);
 }

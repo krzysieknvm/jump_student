@@ -8,6 +8,8 @@
 #include <QCoreApplication>
 #include <QTimer>
 
+#include "../scenes/module/FirstScene.h"
+
 MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(parent), dir(false), in_jump(false), is_on_ground(false), is_jumping(false), is_jump_dir_set(false) {
     //USTAWIENIE KLASY POD ODBIERANIE SYGNAŁÓW Z KLAWIATURY
     setFlag(QGraphicsItem::ItemIsFocusable);
@@ -109,11 +111,13 @@ void MainCharacter::jump() {
     this->is_jumping = true;
 
     //NADANIE PRĘDKOŚCI SKOKU
-    this->velocity = -12;
+    this->velocity = -14;
 }
 
 void MainCharacter::physics() {
     //TODO: Sprawić by po skoku kierunek skoku zmieniał się na 0
+
+    //WSZYSTKO ZE SPADANIEM
     if (!is_on_ground) {
         //PRZYSPIESZENIE GRAWITACYJNE
         this->velocity += (1 * this->gravAcceleration);
@@ -126,6 +130,7 @@ void MainCharacter::physics() {
         this->setY(this->pos().y() + velocity);
     }
 
+    //PRAWA I LEWA GRANICA EKRANU
     if (this->pos().x() > 1030) this->setX(-20);
     if (this->pos().x() < -30) this->setX(1022);
 
