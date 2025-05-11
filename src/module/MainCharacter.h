@@ -5,6 +5,7 @@
 #ifndef MAINCHARACTER_H
 #define MAINCHARACTER_H
 
+#include <QElapsedTimer>
 #include <QGraphicsPixmapItem>
 #include <QObject>
 
@@ -26,7 +27,7 @@ public:
     const int refresh_rate = 16;
 
     void inJump();
-    void jump();
+    void jump(double jumpStrenght);
     void changeDir();
     void physics();
 
@@ -47,6 +48,7 @@ private:
     QPixmap characterInJumpPXRight;
 
     QTimer *physicsTimer;
+    QElapsedTimer jumpTimer;
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;

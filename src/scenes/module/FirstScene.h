@@ -19,6 +19,9 @@ public:
     void setup();
 
 private:
+    //Dla obiektów "stykowych" ustawiane są dodatkowe informacjie, dla ich dalszego rozróżniania
+    //0 -> typ powierzchni (do sprawdzenia czy postać powinna się odbić czy zatrzymać się itp.
+
     MainCharacter *player;
     QGraphicsRectItem *floor;
 

@@ -30,6 +30,7 @@ void FirstScene::setup() {
     addItem(player);
 
     //DODANIE PODŁOŻA DO SCENY
+    floor->setData(0, "top_surface");
     floor->setBrush(QBrush(Qt::darkGreen));
     addItem(floor);
 }

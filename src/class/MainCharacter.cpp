@@ -44,27 +44,41 @@ void MainCharacter::keyPressEvent(QKeyEvent *event) {
     if (event->isAutoRepeat()) return;
 
     if (event->key() == Qt::Key_Space) {
-        this->in_jump = true;
-        inJump();
+        //SPRAWDZENIE CZY POSTAĆ NIE JEST W SKOKU
+        if (!this->is_jumping) {
+            this->in_jump = true;
+
+            //ROZPOCZĘCIE LICZENIA CZASU TRZYMANIA KLAWIATURY
+            this->jumpTimer.start();
+            inJump();
+        }
     }
 
     switch (event->key()) {
         case Qt::Key_A:
-            this->dir = false;
-            changeDir();
+            //SPRAWDZENIE CZY POSTAĆ NIE JEST W SKOKU
+            if (!this->is_jumping) {
+
+                //ZANA KIERUNKU "PATRZENIA" POSTACI
+                this->dir = false;
+                changeDir();
+            }
 
             if (this->in_jump && !this->is_jump_dir_set) {
-                qDebug() << "Skok w lewo " << this->is_jump_dir_set;
                 this->is_jump_dir_set = true;
                 this->jump_dir = -1;
             }
         break;
         case Qt::Key_D:
-            this->dir = true;
-            changeDir();
+            //SPRAWDZENIE CZY POSTAĆ NIE JEST W SKOKU
+            if (!this->is_jumping) {
+
+                //ZANA KIERUNKU "PATRZENIA" POSTACI
+                this->dir = true;
+                changeDir();
+            }
 
             if (this->in_jump && !this->is_jump_dir_set) {
-                qDebug() << "Skok w prawo " << this->is_jump_dir_set;
                 this->is_jump_dir_set = true;
                 this->jump_dir = 1;
             }
@@ -79,10 +93,19 @@ void MainCharacter::keyReleaseEvent(QKeyEvent *event) {
 
     if (event->key() == Qt::Key_Space) {
         this->in_jump = false;
+
+        //ZLICZENIE CZASU TRZYMANIA SPACJI
+        double jumpStrenght = this->jumpTimer.elapsed();
         inJump();
 
+        //RESET KIERUNKU SKOKU
+        if (!this->is_jump_dir_set) {
+            this->is_jump_dir_set = true;
+            this->jump_dir = 0;
+        }
+
         //SKOK
-        if (!this->is_jumping) jump();
+        if (!this->is_jumping) jump(jumpStrenght);
     }
     QGraphicsPixmapItem::keyReleaseEvent(event);
 }
@@ -105,18 +128,19 @@ void MainCharacter::changeDir() {
     }
 }
 
-void MainCharacter::jump() {
+void MainCharacter::jump(double jumpStrenght) {
     //ZMIENNE BLOKUJĄCE
     this->is_on_ground = false;
     this->is_jumping = true;
 
+    if (jumpStrenght > 1500) jumpStrenght = 1500;
+    else if (jumpStrenght < 500) jumpStrenght = 500;
+
     //NADANIE PRĘDKOŚCI SKOKU
-    this->velocity = -14;
+    this->velocity = -0.01 * jumpStrenght;
 }
 
 void MainCharacter::physics() {
-    //TODO: Sprawić by po skoku kierunek skoku zmieniał się na 0
-
     //WSZYSTKO ZE SPADANIEM
     if (!is_on_ground) {
         //PRZYSPIESZENIE GRAWITACYJNE
@@ -128,23 +152,23 @@ void MainCharacter::physics() {
 
         //GRAWITACJA
         this->setY(this->pos().y() + velocity);
+
+        //SPAWDZENIE KOLIZJI Z PODŁOŻEM
+        QList<QGraphicsItem *> floors = this->collidingItems();
+        for (QGraphicsItem *floor : floors) {
+            if (floor->data(0) == "top_surface") {
+                this->is_on_ground = true;
+                this->is_jumping = false;
+                this->is_jump_dir_set = false;
+
+                this->velocity = 0.0;
+                break;
+            }
+        }
     }
 
     //PRAWA I LEWA GRANICA EKRANU
     if (this->pos().x() > 1030) this->setX(-20);
     if (this->pos().x() < -30) this->setX(1022);
-
-    //SPAWDZENIE KOLIZJI Z PODŁOŻEM
-    QList<QGraphicsItem *> floors = this->collidingItems();
-    for (QGraphicsItem *floor : floors) {
-        if (floor->type() == QGraphicsRectItem::Type) {
-            this->is_on_ground = true;
-            this->is_jumping = false;
-            this->is_jump_dir_set = false;
-
-            this->velocity = 0.0;
-            break;
-        }
-    }
 }
 
