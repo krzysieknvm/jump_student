@@ -147,8 +147,8 @@ void MainCharacter::physics() {
         this->velocity += (1 * this->gravAcceleration);
 
         //SKOK W BOK
-        if (this->jump_dir == -1) this->setX(this->pos().x() - 4);
-        else if (this->jump_dir == 1) this->setX(this->pos().x() + 4);
+        if (this->jump_dir == -1) this->setX(this->pos().x() - slideVar);
+        else if (this->jump_dir == 1) this->setX(this->pos().x() + slideVar);
 
         //GRAWITACJA
         this->setY(this->pos().y() + velocity);
@@ -161,8 +161,12 @@ void MainCharacter::physics() {
                 this->is_jumping = false;
                 this->is_jump_dir_set = false;
 
+                this->slideVar = 4;
                 this->velocity = 0.0;
                 break;
+            }
+            if (floor->data(0) == "side_surface") {
+                this->slideVar = -4;
             }
         }
     }

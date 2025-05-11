@@ -19,11 +19,13 @@ public:
     // in_on_ground -> czy postać znajduje się na podłożu
     // is_jumping -> czy postać jest w fazie skoku (pozycja)
     // is_jump_dir_set -> czy postać w danym skoku ma ustawiony kierunek
+    // slideVar -> w zależności od znaku dodaje lub odejmuje pozycje w X przy skoku
 
     bool dir, in_jump, is_on_ground, is_jumping, is_jump_dir_set;
     int jump_dir = 0; //jump dir -> 0 = none, -1 = left, 1 = right
     const double gravAcceleration = 0.4;
     double velocity = 0.0;
+    int slideVar = 4;
     const int refresh_rate = 16;
 
     void inJump();

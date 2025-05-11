@@ -25,6 +25,18 @@ private:
     MainCharacter *player;
     QGraphicsRectItem *floor;
 
+    //Platforma 1
+    QGraphicsRectItem *top_wall_p1;
+    QGraphicsRectItem *bottom_wall_p1;
+    QGraphicsRectItem *right_wall_p1;
+    QGraphicsRectItem *left_wall_p1;
+
+    //Platforma 2
+    QGraphicsRectItem *top_wall_p2;
+    QGraphicsRectItem *bottom_wall_p2;
+    QGraphicsRectItem *right_wall_p2;
+    QGraphicsRectItem *left_wall_p2;
+
     QString dirPath;
 
 };
