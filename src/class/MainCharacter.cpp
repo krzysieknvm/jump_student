@@ -3,11 +3,6 @@
 //
 
 #include "../module/MainCharacter.h"
-
-#include <QKeyEvent>
-#include <QCoreApplication>
-#include <QTimer>
-
 #include "../scenes/module/FirstScene.h"
 
 MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(parent), dir(false), in_jump(false), is_on_ground(false), is_jumping(false), is_jump_dir_set(false) {
@@ -135,11 +130,11 @@ void MainCharacter::changeDir() {
 
 void MainCharacter::jump(double jumpStrenght) {
     //ZMIENNA MOCY SKOKU
-    if (jumpStrenght > 1500) jumpStrenght = 1500;
-    else if (jumpStrenght < 500) jumpStrenght = 500;
+    if (jumpStrenght > 750) jumpStrenght = 750;
+    else if (jumpStrenght < 250) jumpStrenght = 250;
 
     //NADANIE PRĘDKOŚCI SKOKU
-    this->velocity = -0.01 * jumpStrenght;
+    this->velocity = -0.02 * jumpStrenght;
 
     //ZMIENNE BLOKUJĄCE
     this->is_on_ground = false;
@@ -151,8 +146,6 @@ void MainCharacter::physics() {
     if (!is_on_ground) {
         //PRZYSPIESZENIE GRAWITACYJNE
         this->velocity += (1 * this->gravAcceleration);
-        //test (wpadanie w podłogę)
-        qDebug() << this->velocity;
 
         //SKOK W BOK
         if (this->jump_dir == -1) this->setX(this->pos().x() - slideVar);
@@ -179,7 +172,12 @@ void MainCharacter::physics() {
                 break;
             }
             if (floor->data(0) == "side_surface") {
-                this->slideVar = -4;
+                if (this->slideVar == 4) this->slideVar = -4;
+                else this->slideVar = 4;
+            }
+            if (floor->data(0) == "bottom_surface") {
+                this->velocity = 0.0;
+                this->slideVar = 0;
             }
         }
     }

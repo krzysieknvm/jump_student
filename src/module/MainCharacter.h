@@ -8,6 +8,10 @@
 #include <QElapsedTimer>
 #include <QGraphicsPixmapItem>
 #include <QObject>
+#include <QKeyEvent>
+#include <QCoreApplication>
+#include <QTimer>
+
 
 class MainCharacter : public QObject, public QGraphicsPixmapItem {
     Q_OBJECT

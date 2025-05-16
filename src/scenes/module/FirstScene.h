@@ -6,10 +6,13 @@
 #define FIRSTSCENE_H
 
 #include "../../module/MainCharacter.h"
+#include "../../utils/module/Platform.h"
 
 #include <QGraphicsScene>
 #include <QPushButton>
 #include <QString>
+#include <QCoreApplication>
+#include <QPixmap>
 
 class FirstScene : public QGraphicsScene {
     Q_OBJECT
@@ -25,17 +28,11 @@ private:
     MainCharacter *player;
     QGraphicsRectItem *floor;
 
-    //Platforma 1
-    QGraphicsRectItem *top_wall_p1;
-    QGraphicsRectItem *bottom_wall_p1;
-    QGraphicsRectItem *right_wall_p1;
-    QGraphicsRectItem *left_wall_p1;
-
-    //Platforma 2
-    QGraphicsRectItem *top_wall_p2;
-    QGraphicsRectItem *bottom_wall_p2;
-    QGraphicsRectItem *right_wall_p2;
-    QGraphicsRectItem *left_wall_p2;
+    //Platformy
+    Platform *p1;
+    Platform *p2;
+    Platform *p3;
+    Platform *p4;
 
     QString dirPath;
 

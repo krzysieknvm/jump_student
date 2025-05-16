@@ -21,7 +21,7 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     startBtn->setFixedSize(100,50);
 
     //NAPIS TESTOWY
-    descLabel = new QLabel("Jump Student by Krzysztof Konieczny", this);
+    descLabel = new QLabel("Jump Student by Krzysztof Konieczny 2025", this);
     descLabel->setObjectName("descLabel");
     descLabel->setAlignment(Qt::AlignCenter);
 

@@ -4,9 +4,6 @@
 
 #include "../module/FirstScene.h"
 
-#include <QCoreApplication>
-#include <QPixmap>
-
 FirstScene::FirstScene(QObject *parent) : QGraphicsScene(parent) {
     dirPath = QCoreApplication::applicationDirPath();
     setSceneRect(0,0,1022,758);
@@ -20,17 +17,11 @@ FirstScene::FirstScene(QObject *parent) : QGraphicsScene(parent) {
     //GENEROWANIE PODŁOŻA
     floor = new QGraphicsRectItem(0,728,1024,40);
 
-    //Platforma 1
-    top_wall_p1 = new QGraphicsRectItem(4, 524 ,300,4);
-    bottom_wall_p1 = new QGraphicsRectItem(4, 724,300,4);
-    right_wall_p1 = new QGraphicsRectItem(304, 524, 4, 200);
-    left_wall_p1 = new QGraphicsRectItem(0, 524, 4, 200);
-
-    //Platforma 2
-    top_wall_p2 = new QGraphicsRectItem(724, 524 ,300,4);
-    bottom_wall_p2 = new QGraphicsRectItem(724, 724,300,4);
-    right_wall_p2 = new QGraphicsRectItem(720, 524, 4, 200);
-    left_wall_p2 = new QGraphicsRectItem(1020, 524, 4, 200);
+    //Platformy
+    p1 = new Platform(QPoint(0,528), QSizeF(300, 200));
+    p2 = new Platform(QPoint(724,528), QSizeF(300, 200));
+    p3 = new Platform(QPoint(400,300), QSizeF(200, 100));
+    p4 = new Platform(QPoint(0,100), QSizeF(350, 100));
 
     setup();
 }
@@ -45,35 +36,8 @@ void FirstScene::setup() {
     floor->setBrush(QBrush(Qt::darkGreen));
     addItem(floor);
 
-    top_wall_p1->setData(0, "top_surface");
-    top_wall_p1->setBrush(QBrush(Qt::darkGreen));
-    addItem(top_wall_p1);
-
-    bottom_wall_p1->setData(0, "bottom_surface");
-    bottom_wall_p1->setBrush(QBrush(Qt::darkRed));
-    addItem(bottom_wall_p1);
-
-    right_wall_p1->setData(0, "side_surface");
-    right_wall_p1->setBrush(QBrush(Qt::darkBlue));
-    addItem(right_wall_p1);
-
-    left_wall_p1->setData(0, "side_surface");
-    left_wall_p1->setBrush(QBrush(Qt::darkYellow));
-    addItem(left_wall_p1);
-
-    top_wall_p2->setData(0, "top_surface");
-    top_wall_p2->setBrush(QBrush(Qt::darkGreen));
-    addItem(top_wall_p2);
-
-    bottom_wall_p2->setData(0, "bottom_surface");
-    bottom_wall_p2->setBrush(QBrush(Qt::darkRed));
-    addItem(bottom_wall_p2);
-
-    right_wall_p2->setData(0, "side_surface");
-    right_wall_p2->setBrush(QBrush(Qt::darkBlue));
-    addItem(right_wall_p2);
-
-    left_wall_p2->setData(0, "side_surface");
-    left_wall_p2->setBrush(QBrush(Qt::darkYellow));
-    addItem(left_wall_p2);
+    addItem(p1);
+    addItem(p2);
+    addItem(p3);
+    addItem(p4);
 }
