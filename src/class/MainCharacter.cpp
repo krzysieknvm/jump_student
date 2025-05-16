@@ -83,6 +83,11 @@ void MainCharacter::keyPressEvent(QKeyEvent *event) {
                 this->jump_dir = 1;
             }
         break;
+        //DEBUG ONLY
+        //TODO: DO USUNIĘCIA
+        case Qt::Key_X:
+            qDebug() << "MARKER X!";
+        break;
     }
     QGraphicsPixmapItem::keyPressEvent(event);
 }
@@ -129,15 +134,16 @@ void MainCharacter::changeDir() {
 }
 
 void MainCharacter::jump(double jumpStrenght) {
-    //ZMIENNE BLOKUJĄCE
-    this->is_on_ground = false;
-    this->is_jumping = true;
-
+    //ZMIENNA MOCY SKOKU
     if (jumpStrenght > 1500) jumpStrenght = 1500;
     else if (jumpStrenght < 500) jumpStrenght = 500;
 
     //NADANIE PRĘDKOŚCI SKOKU
     this->velocity = -0.01 * jumpStrenght;
+
+    //ZMIENNE BLOKUJĄCE
+    this->is_on_ground = false;
+    this->is_jumping = true;
 }
 
 void MainCharacter::physics() {
@@ -145,6 +151,8 @@ void MainCharacter::physics() {
     if (!is_on_ground) {
         //PRZYSPIESZENIE GRAWITACYJNE
         this->velocity += (1 * this->gravAcceleration);
+        //test (wpadanie w podłogę)
+        qDebug() << this->velocity;
 
         //SKOK W BOK
         if (this->jump_dir == -1) this->setX(this->pos().x() - slideVar);
@@ -157,6 +165,11 @@ void MainCharacter::physics() {
         QList<QGraphicsItem *> floors = this->collidingItems();
         for (QGraphicsItem *floor : floors) {
             if (floor->data(0) == "top_surface") {
+
+                //POPRAWA POZYCJI POSTACI
+                double floorLevel = floor->sceneBoundingRect().top() - 72; //Pozycja obiektu (Y) + wysokość postaci
+                if (floorLevel != this->pos().y()) this->setPos(this->pos().x(), floorLevel);
+
                 this->is_on_ground = true;
                 this->is_jumping = false;
                 this->is_jump_dir_set = false;
