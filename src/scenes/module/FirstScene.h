@@ -9,10 +9,7 @@
 #include "../../utils/module/Platform.h"
 
 #include <QGraphicsScene>
-#include <QPushButton>
-#include <QString>
 #include <QCoreApplication>
-#include <QPixmap>
 
 class FirstScene : public QGraphicsScene {
     Q_OBJECT
