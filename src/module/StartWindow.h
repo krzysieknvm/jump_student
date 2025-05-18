@@ -6,6 +6,7 @@
 #define STARTWINDOW_H
 
 #include "../scenes/module/FirstScene.h"
+#include "../scenes/module/SecoundScene.h"
 
 #include <QLayout>
 #include <QGraphicsView>
@@ -22,13 +23,21 @@ public:
 
 private slots:
     void clearForGame();
+    void nextScene();
+    void prevScene();
 
 private:
     FirstScene *fScene;
+    SecoundScene *sScene;
+
+    MainCharacter *player;
 
     QPushButton *startBtn;
     QLabel *descLabel;
     QBoxLayout *startingScreenLayout;
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 };
 
 

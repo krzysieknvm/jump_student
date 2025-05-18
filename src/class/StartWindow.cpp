@@ -3,16 +3,18 @@
 //
 
 #include "../module/StartWindow.h"
-#include "../scenes/module/FirstScene.h"
-
 
 StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     //USTAWIENIA OKNA
     setWindowTitle("Jump Student");
     setFixedSize(1024,768);
 
-    //GENEROWANIE PIERWSZEJ SCENY
+    //GENEROWANIE SCEN
     fScene = new FirstScene(this);
+    sScene = new SecoundScene(this);
+    player = new MainCharacter();
+    connect(player, &MainCharacter::switchToNextSceneSignal, this, &StartWindow::nextScene);
+    connect(player, &MainCharacter::switchToPrevSceneSignal, this, &StartWindow::prevScene);
 
     //PRZYCISK ROZPOCZNIJ
     startBtn = new QPushButton("Rozpocznij", this);
@@ -37,10 +39,46 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
 
 void StartWindow::clearForGame() {
     qDebug() << "Game start...";
+
     //CHOWANIE RZECZY POCZĄTKOWYCH
-    this->findChild<QPushButton*>("startBtn")->hide();
-    this->findChild<QLabel*>("descLabel")->hide();
+    this->startBtn->hide();
+    this->descLabel->hide();
 
     //USTAWIENIE PIERWSZEJ SCENY
     setScene(fScene);
+    player->setPos(480,660);//x-480,y-660
+    fScene->addItem(player);
+
+    player->is_game_running = true;
+}
+
+void StartWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->isAutoRepeat()) return;
+
+    if (event->key() == Qt::Key_Escape) {
+        if (player->is_game_running) player->is_game_running = false;
+        else player->is_game_running = true;
+    }
+
+    QGraphicsView::keyPressEvent(event);
+}
+
+void StartWindow::nextScene() {
+    fScene->removeItem(player);
+    setScene(sScene);
+    sScene->addItem(player);
+
+    player->can_switch_scene = true;
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
+}
+
+void StartWindow::prevScene() {
+    sScene->removeItem(player);
+    setScene(fScene);
+    fScene->addItem(player);
+
+    player->can_switch_scene = true;
+    player->setFlag(QGraphicsItem::ItemIsFocusable);
+    player->setFocus();
 }

@@ -25,7 +25,7 @@ public:
     // is_jump_dir_set -> czy postać w danym skoku ma ustawiony kierunek
     // slideVar -> w zależności od znaku dodaje lub odejmuje pozycje w X przy skoku
 
-    bool dir, in_jump, is_on_ground, is_jumping, is_jump_dir_set;
+    bool dir, in_jump, is_on_ground, is_jumping, is_jump_dir_set, is_game_running = false, can_switch_scene = true;
     int jump_dir = 0; //jump dir -> 0 = none, -1 = left, 1 = right
     const double gravAcceleration = 0.4;
     double velocity = 0.0;
@@ -37,7 +37,9 @@ public:
     void changeDir();
     void physics();
 
-public slots:
+signals:
+    void switchToNextSceneSignal();
+    void switchToPrevSceneSignal();
 
 private:
     QString dirPath;

@@ -3,6 +3,8 @@
 //
 
 #include "../module/MainCharacter.h"
+
+#include "../module/StartWindow.h"
 #include "../scenes/module/FirstScene.h"
 
 MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(parent), dir(false), in_jump(false), is_on_ground(false), is_jumping(false), is_jump_dir_set(false) {
@@ -142,48 +144,63 @@ void MainCharacter::jump(double jumpStrenght) {
 }
 
 void MainCharacter::physics() {
-    //WSZYSTKO ZE SPADANIEM
-    if (!is_on_ground) {
-        //PRZYSPIESZENIE GRAWITACYJNE
-        this->velocity += (1 * this->gravAcceleration);
+    if (is_game_running) {
+        //WSZYSTKO ZE SPADANIEM
+        if (!is_on_ground) {
+            //PRZYSPIESZENIE GRAWITACYJNE
+            this->velocity += (1 * this->gravAcceleration);
 
-        //SKOK W BOK
-        if (this->jump_dir == -1) this->setX(this->pos().x() - slideVar);
-        else if (this->jump_dir == 1) this->setX(this->pos().x() + slideVar);
+            //SKOK W BOK
+            if (this->jump_dir == -1) this->setX(this->pos().x() - slideVar);
+            else if (this->jump_dir == 1) this->setX(this->pos().x() + slideVar);
 
-        //GRAWITACJA
-        this->setY(this->pos().y() + velocity);
+            //GRAWITACJA
+            this->setY(this->pos().y() + velocity);
 
-        //SPAWDZENIE KOLIZJI Z PODŁOŻEM
-        QList<QGraphicsItem *> floors = this->collidingItems();
-        for (QGraphicsItem *floor : floors) {
-            if (floor->data(0) == "top_surface") {
+            //SPAWDZENIE KOLIZJI Z PODŁOŻEM
+            QList<QGraphicsItem *> floors = this->collidingItems();
+            for (QGraphicsItem *floor: floors) {
+                if (floor->data(0) == "top_surface") {
+                    //POPRAWA POZYCJI POSTACI
+                    double floorLevel = floor->sceneBoundingRect().top() - 72; //Pozycja obiektu (Y) + wysokość postaci
+                    if (floorLevel != this->pos().y()) this->setPos(this->pos().x(), floorLevel);
 
-                //POPRAWA POZYCJI POSTACI
-                double floorLevel = floor->sceneBoundingRect().top() - 72; //Pozycja obiektu (Y) + wysokość postaci
-                if (floorLevel != this->pos().y()) this->setPos(this->pos().x(), floorLevel);
+                    this->is_on_ground = true;
+                    this->is_jumping = false;
+                    this->is_jump_dir_set = false;
 
-                this->is_on_ground = true;
-                this->is_jumping = false;
-                this->is_jump_dir_set = false;
-
-                this->slideVar = 4;
-                this->velocity = 0.0;
-                break;
-            }
-            if (floor->data(0) == "side_surface") {
-                if (this->slideVar == 4) this->slideVar = -4;
-                else this->slideVar = 4;
-            }
-            if (floor->data(0) == "bottom_surface") {
-                this->velocity = 0.0;
-                this->slideVar = 0;
+                    this->slideVar = 4;
+                    this->velocity = 0.0;
+                    break;
+                }
+                if (floor->data(0) == "side_surface") {
+                    if (this->slideVar == 4) this->slideVar = -4;
+                    else this->slideVar = 4;
+                }
+                if (floor->data(0) == "bottom_surface") {
+                    this->velocity = 0.0;
+                    this->slideVar = 0;
+                }
             }
         }
-    }
 
-    //PRAWA I LEWA GRANICA EKRANU
-    if (this->pos().x() > 1030) this->setX(-20);
-    if (this->pos().x() < -30) this->setX(1022);
+        //PRAWA I LEWA GRANICA EKRANU
+        if (this->pos().x() > 1030) this->setX(-20);
+        if (this->pos().x() < -30) this->setX(1022);
+
+        //PRZEKROCZENIE GÓRNEJ GRANICY EKRANU (ZMIANA SCENY)
+        if (this->pos().y() < -10 && can_switch_scene) {
+            can_switch_scene = false;
+            emit switchToNextSceneSignal();
+            this->setY(758);
+        }
+
+        //PRZEKROCZENIE DOLNEJ GRANICY EKRANU (ZMIANA SCENY)
+        if (this->pos().y() > 770 && can_switch_scene) {
+            can_switch_scene = false;
+            emit switchToPrevSceneSignal();
+            this->setY(0);
+        }
+    }
 }
 
