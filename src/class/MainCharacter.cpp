@@ -113,20 +113,24 @@ void MainCharacter::keyReleaseEvent(QKeyEvent *event) {
 }
 
 void MainCharacter::inJump() {
-    if (this->in_jump) {
-        this->setPos(this->pos().x(),this->pos().y() + 6);
-        setPixmap(this->dir ? characterInJumpPXRight : characterInJumpPXLeft);
-    } else {
-        this->setPos(this->pos().x(),this->pos().y() - 6);
-        setPixmap(this->dir ? characterInRestPXRight : characterInRestPXLeft);
+    if (is_game_running) {
+        if (this->in_jump) {
+            this->setPos(this->pos().x(), this->pos().y() + 6);
+            setPixmap(this->dir ? characterInJumpPXRight : characterInJumpPXLeft);
+        } else {
+            this->setPos(this->pos().x(), this->pos().y() - 6);
+            setPixmap(this->dir ? characterInRestPXRight : characterInRestPXLeft);
+        }
     }
 }
 
 void MainCharacter::changeDir() {
-    if (this->in_jump) {
-        setPixmap(this->dir ? characterInJumpPXRight : characterInJumpPXLeft);
-    } else {
-        setPixmap(this->dir ? characterInRestPXRight : characterInRestPXLeft);
+    if (is_game_running) {
+        if (this->in_jump) {
+            setPixmap(this->dir ? characterInJumpPXRight : characterInJumpPXLeft);
+        } else {
+            setPixmap(this->dir ? characterInRestPXRight : characterInRestPXLeft);
+        }
     }
 }
 
