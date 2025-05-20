@@ -16,6 +16,8 @@ StartWindow::StartWindow(QWidget *parent) : QGraphicsView(parent) {
     connect(player, &MainCharacter::switchToNextSceneSignal, this, &StartWindow::nextScene);
     connect(player, &MainCharacter::switchToPrevSceneSignal, this, &StartWindow::prevScene);
 
+    //USTAWIENIE TRACKERA AKTUALNEJ SCENY
+
     //PRZYCISK ROZPOCZNIJ
     startBtn = new QPushButton("Rozpocznij", this);
     startBtn->setObjectName("startBtn");
@@ -56,8 +58,12 @@ void StartWindow::keyPressEvent(QKeyEvent *event) {
     if (event->isAutoRepeat()) return;
 
     if (event->key() == Qt::Key_Escape) {
-        if (player->is_game_running) player->is_game_running = false;
-        else player->is_game_running = true;
+        if (player->is_game_running) {
+            player->is_game_running = false;
+        }
+        else {
+            player->is_game_running = true;
+        }
     }
 
     QGraphicsView::keyPressEvent(event);

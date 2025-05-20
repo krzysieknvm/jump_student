@@ -17,7 +17,6 @@ MainCharacter::MainCharacter(QGraphicsPixmapItem *parent) : QGraphicsPixmapItem(
     connect(physicsTimer, &QTimer::timeout, this, &MainCharacter::physics);
     physicsTimer->start(refresh_rate);
 
-    //TODO: Zrobić kolejne warianty postaci
     //MODELE POSTACI
     charVariant = "mainChar_ver";
 
@@ -79,11 +78,6 @@ void MainCharacter::keyPressEvent(QKeyEvent *event) {
                 this->is_jump_dir_set = true;
                 this->jump_dir = 1;
             }
-        break;
-        //DEBUG ONLY
-        //TODO: DO USUNIĘCIA
-        case Qt::Key_X:
-            qDebug() << "MARKER X!";
         break;
     }
     QGraphicsPixmapItem::keyPressEvent(event);

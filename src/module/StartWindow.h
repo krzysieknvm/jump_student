@@ -27,6 +27,8 @@ private slots:
     void prevScene();
 
 private:
+    int curent_scene = 1;
+
     FirstScene *fScene;
     SecoundScene *sScene;
 
